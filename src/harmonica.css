@@ -1,0 +1,13 @@
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+mx|Application {
+    paddingTop: 10;
+    paddingBottom: 10;
+    paddingLeft: 10;
+    paddingRight: 10;
+    fontFamily: Verdana;
+    fontSize: 14;
+    fontWeight: normal;
+    themeColor: #808080;
+    backgroundColor: #808080;
+}

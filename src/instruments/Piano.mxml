@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<instruments:AbstractInstrument xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:instruments="instruments.*"
+                                verticalAlign="middle" horizontalAlign="center">
+
+    <mx:Script><![CDATA[
+
+        [Bindable]
+        private var dpBlack:Array = [
+            ['s', 83, 1, N_DO_RE],
+            ['d', 68, 3, N_RE_MI],
+            ['', 0],
+            ['g', 71, 6, N_FA_SOL],
+            ['h', 72, 8, N_SOL_LA],
+            ['j', 74, 10, N_LA_SI],
+            ['', 0],
+            ['l', 76, 13, N_DO_RE],
+            [';', 186, 15, N_RE_MI],
+            ['', 0],
+            ['2', 50, 18, N_FA_SOL],
+            ['3', 51, 20, N_SOL_LA],
+            ['4', 52, 22, N_LA_SI],
+            ['', 0],
+            ['6', 54, 25, N_DO_RE],
+            ['7', 55, 27, N_RE_MI],
+            ['', 0],
+            ['9', 57, 30, N_FA_SOL],
+            ['0', 48, 32, N_SOL_LA],
+            ['-', 189, 34, N_LA_SI]
+        ];
+
+        [Bindable]
+        private var dpWhite:Array = [
+            ['z', 90, 0, N_DO],
+            ['x', 88, 2, N_RE],
+            ['c', 67, 4, N_MI],
+            ['v', 86, 5, N_FA],
+            ['b', 66, 7, N_SOL],
+            ['n', 78, 9, N_LA],
+            ['m', 77, 11, N_SI],
+            [',', 188, 12, N_DO],
+            ['.', 190, 14, N_RE],
+            ['/', 191, 16, N_MI],
+            ['q', 81, 17, N_FA],
+            ['w', 87, 19, N_SOL],
+            ['e', 69, 21, N_LA],
+            ['r', 82, 23, N_SI],
+            ['t', 84, 24, N_DO],
+            ['y', 89, 26, N_RE],
+            ['u', 85, 28, N_MI],
+            ['i', 73, 29, N_FA],
+            ['o', 79, 31, N_SOL],
+            ['p', 80, 33, N_LA],
+            ['[', 219, 35, N_SI]
+        ];
+        ]]></mx:Script>
+
+    <mx:Style>
+        .pianoBlackKey {
+            fillAlphas: 1, 1;
+            paddingTop: 50;
+            fillColors: #000000, #333333;
+            focusColor: #666666;
+            textRollOverColor: #808080;
+            color: #FFFFFF;
+            paddingLeft: 0;
+            paddingRight: 0;
+        }
+
+        .pianoWhiteKey {
+            fillAlphas: 1, 1;
+            paddingTop: 150;
+            fillColors: #FFFFFF, #CCCCCC;
+            focusColor: #999999;
+            textRollOverColor: #808080;
+            color: #000000;
+        }
+
+        .pianoRow {
+            horizontalGap: 0;
+            paddingLeft: 0;
+            paddingBottom: 0;
+            paddingRight: 0;
+            paddingTop: 0;
+        }
+
+    </mx:Style>
+
+    <mx:Canvas width="100%" height="250" mouseDown="mouseDownHandler(event)" mouseUp="mouseUpHandler(event)">
+        <mx:HBox styleName="pianoRow" horizontalCenter="0" top="0" horizontalGap="0">
+            <mx:Repeater id="rpWhite" dataProvider="{dpWhite}">
+                <mx:Button height="200" width="36" styleName="pianoWhiteKey" label="{rpWhite.currentItem[0]}"
+                           toolTip="{rpWhite.currentItem[3]}" initialize="pushButton(event)" />
+            </mx:Repeater>
+        </mx:HBox>
+
+        <mx:HBox styleName="pianoRow" horizontalCenter="0" top="0" horizontalGap="12">
+            <mx:Repeater id="rpBlack" dataProvider="{dpBlack}">
+                <mx:Button height="100" width="24" styleName="pianoBlackKey" label="{rpBlack.currentItem[0]}"
+                           toolTip="{rpBlack.currentItem[3]}" initialize="pushButton(event)"
+                           visible="{rpBlack.currentItem[1]>0}"/>
+            </mx:Repeater>
+        </mx:HBox>
+    </mx:Canvas>
+
+</instruments:AbstractInstrument>

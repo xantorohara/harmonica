@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:instruments="instruments.*"
+                layout="vertical" width="800" height="500"
+                horizontalAlign="center" verticalGap="10"
+                creationComplete="onCreationComplete()" keyDown="keyDownHandler(event)"
+                keyUp="keyUpHandler(event)" activate="setDefaultFocus()">
+
+    <mx:Script><![CDATA[
+        import instruments.AbstractInstrument;
+
+        import mx.core.FlexGlobals;
+        import mx.events.ListEvent;
+
+        import synthesizers.AbstractSynthesizer;
+        import synthesizers.guitar.GuitarAcousticSynthesizer;
+        import synthesizers.bayan.BayanSynthesizer;
+        import synthesizers.drums.DrumsSynthesizer;
+        import synthesizers.guitar.GuitarBassSynthesizer;
+        import synthesizers.musicbox.MusicBoxSynthesizer;
+        import synthesizers.nintendo.NintendoSynthesizer;
+        import synthesizers.piano.PianoSynthesizer;
+
+        [Bindable]
+        private var synt:AbstractSynthesizer;
+
+        private var pianoSynt:PianoSynthesizer = new PianoSynthesizer();
+        private var musicBoxbSynt:MusicBoxSynthesizer = new MusicBoxSynthesizer();
+        private var bayanSynt:BayanSynthesizer = new BayanSynthesizer();
+        private var nintendoSynt:NintendoSynthesizer = new NintendoSynthesizer();
+        private var drumsSynt:DrumsSynthesizer = new DrumsSynthesizer();
+        private var guitarAcousticSynt:GuitarAcousticSynthesizer = new GuitarAcousticSynthesizer();
+        private var guitarBassSynt:GuitarBassSynthesizer = new GuitarBassSynthesizer();
+
+        private function onCreationComplete():void {
+            synt = pianoSynt;
+        }
+
+        private var wrapper:Object;
+
+
+        protected override function keyDownHandler(event:KeyboardEvent):void {
+            (vs.selectedChild as AbstractInstrument).keyDown(event);
+            super.keyDownHandler(event);
+        }
+
+        override protected function keyUpHandler(event:KeyboardEvent):void {
+            (vs.selectedChild as AbstractInstrument).keyUp(event);
+            super.keyUpHandler(event);
+        }
+
+        private function instrumentSelected(event:ListEvent):void {
+            var selected:Object = ComboBox(event.target).selectedItem;
+
+            switch (selected.id) {
+                case 'bayan':
+                    vs.selectedChild = bayan;
+                    break;
+                case 'piano':
+                    vs.selectedChild = piano;
+                    break;
+                case 'garmon':
+                    vs.selectedChild = garmon;
+                    break;
+                case 'xylophone':
+                    vs.selectedChild = xylophone;
+                    break;
+                case 'drums':
+                    vs.selectedChild = drums;
+                    break;
+            }
+
+            if (selected.synt) {
+                synt = selected.synt;
+                for each(var sb:Object in soundbanks.dataProvider) {
+                    if (sb.synt == synt) {
+                        soundbanks.selectedItem = sb;
+                        break;
+                    }
+                }
+            }
+            setDefaultFocus();
+        }
+
+        public function soundbankSelected(event:ListEvent):void {
+            var selected:Object = ComboBox(event.target).selectedItem;
+            synt = selected.synt;
+            setDefaultFocus();
+        }
+
+        private function setDefaultFocus():void {
+            if (vs) {
+                vs.setFocus();
+            }
+        }
+
+        [Bindable]
+        private var instruments:Array = [
+            {label: 'Piano', id:'piano', synt: pianoSynt},
+            {label: 'Bayan', id: 'bayan', synt: bayanSynt},
+            {label: 'Harmonica', id:'garmon', synt: bayanSynt},
+            {label: 'Xylophone', id:'xylophone', synt: musicBoxbSynt},
+            {label: 'Drums', id:'drums', synt: drumsSynt}
+        ];
+
+        [Bindable]
+        private var synts:Array = [
+            {label: 'Piano', id:'piano', synt: pianoSynt},
+            {label: 'Musicbox', id: 'mb', synt: musicBoxbSynt},
+            {label: 'Bayan', id: 'bayan', synt: bayanSynt},
+            {label: 'Nintendo', id: 'nintendo', synt: nintendoSynt},
+            {label: 'Drums', id: 'drums', synt: drumsSynt},
+            {label: 'Acoustic guitar', id: 'guitar', synt: guitarAcousticSynt},
+            {label: 'Bass guitar', id: 'bass', synt: guitarBassSynt}
+        ];
+        ]]></mx:Script>
+
+    <mx:Style source="harmonica.css"/>
+
+    <mx:HBox width="100%" verticalAlign="middle">
+            <mx:Label text="Instrument"/>
+            <mx:ComboBox dataProvider="{instruments}" change="instrumentSelected(event)" width="200"/>
+            <mx:Label text="Soundbank"/>
+            <mx:ComboBox id="soundbanks" dataProvider="{synts}" change="soundbankSelected(event)" width="200"
+                    rowCount="{synts.length}"/>
+            <mx:Spacer width="100%"/>
+        <mx:Label text="v. 1.0.{Version.BUILD_NUMBER}"/>
+
+    </mx:HBox>
+
+    <mx:ViewStack id="vs" width="100%" height="100%" focusEnabled="true">
+        <instruments:Piano id="piano" synt="{synt}"/>
+        <instruments:Bayan id="bayan" synt="{synt}"/>
+        <instruments:Garmon id="garmon" synt="{synt}"/>
+        <instruments:Xylophone id="xylophone" synt="{synt}"/>
+        <instruments:Drums id="drums" synt="{synt}"/>
+    </mx:ViewStack>
+
+</mx:Application>

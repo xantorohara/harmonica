@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<instruments:AbstractInstrument xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:instruments="instruments.*"
+                                verticalAlign="middle" horizontalAlign="center"
+                                backgroundImage="@Embed(source='../images/drums.jpg')"
+                                backgroundColor="white" cornerRadius="10"
+                                borderStyle="solid" borderColor="#808080">
+
+    <mx:Script><![CDATA[
+
+        [Bindable]
+        private var dp:Array = [
+            ['c', 67, 2, 236, 15, 140, 'x20_16'],
+            ['x', 88, 8, 188, 194, 88, 'x14_5'],
+            ['d', 68, 3, 214, 112, 74, 'x12_9'],
+            ['f', 70, 4, 298, 97, 86, 'x14_12'],
+            ['v', 86, 7, 333, 186, 102, 'x16_16'],
+            ['z', 90, 9, 93, 190, 88, 'hats14'],
+            ['a', 65, 0, 47, 128, 102, 'crash16'],
+            ['s', 83, 6, 127, 48, 114, 'crash18'],
+            ['g', 71, 5, 360, 24, 130, 'ride21'],
+            ['b', 66, 1, 438, 140, 114, 'ride18']
+        ];
+        ]]></mx:Script>
+
+
+    <mx:Canvas width="600" height="400" mouseDown="mouseDownHandler(event)" mouseUp="mouseUpHandler(event)">
+        <mx:Repeater id="rp" dataProvider="{dp}">
+            <mx:Button height="{rp.currentItem[5]}" width="{rp.currentItem[5]}" left="{rp.currentItem[3]}"
+                       top="{rp.currentItem[4]}" cornerRadius="{rp.currentItem[5]/2}" label="{rp.currentItem[0]}"
+                       initialize="pushButton(event)"/>
+        </mx:Repeater>
+    </mx:Canvas>
+</instruments:AbstractInstrument>

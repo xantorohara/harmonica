@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<instruments:AbstractInstrument xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:instruments="instruments.*"
+                                verticalAlign="middle" horizontalAlign="center">
+
+    <mx:Script><![CDATA[
+        private static const BLACK:String = 'blackKey';
+        private static const WHITE:String = 'whiteKey';
+
+        [Bindable]
+        private var dp1:Array = [
+            ['q', 81, 0, N_DO, WHITE],
+            ['w', 87, 3, N_RE_MI, BLACK],
+            ['e', 69, 6, N_FA_SOL, BLACK],
+            ['r', 82, 9, N_LA, WHITE],
+            ['t', 84, 12, N_DO, WHITE],
+            ['y', 89, 15, N_RE_MI, BLACK],
+            ['u', 85, 18, N_FA_SOL, BLACK],
+            ['i', 73, 21, N_LA, WHITE],
+            ['o', 79, 24, N_DO, WHITE],
+            ['p', 80, 27, N_RE_MI, BLACK],
+            ['[', 219, 30, N_FA_SOL, BLACK],
+            [']', 221, 33, N_LA, WHITE]
+        ];
+
+        [Bindable]
+        private var dp2:Array = [
+            ['a', 65, 1, N_DO_RE, BLACK],
+            ['s', 83, 4, N_MI, WHITE],
+            ['d', 68, 7, N_SOL, WHITE],
+            ['f', 70, 10, N_LA_SI, BLACK],
+            ['g', 71, 13, N_DO_RE, BLACK],
+            ['h', 72, 16, N_MI, WHITE],
+            ['j', 74, 19, N_SOL, WHITE],
+            ['k', 75, 22, N_LA_SI, BLACK],
+            ['l', 76, 25, N_DO_RE, BLACK],
+            [';', 186, 28, N_MI, WHITE],
+            ['\'', 222, 31, N_SOL, WHITE],
+            ['', 0, 34, N_LA_SI, BLACK]
+        ];
+
+        [Bindable]
+        private var dp3:Array = [
+            ['z', 90, 2, N_RE, WHITE],
+            ['x', 88, 5, N_FA, WHITE],
+            ['c', 67, 8, N_SOL_LA, BLACK],
+            ['v', 86, 11, N_SI, WHITE],
+            ['b', 66, 14, N_RE, WHITE],
+            ['n', 78, 17, N_FA, WHITE],
+            ['m', 77, 20, N_SOL_LA, BLACK],
+            [',', 188, 23, N_SI, WHITE],
+            ['.', 190, 26, N_RE, WHITE],
+            ['/', 191, 29, N_FA, WHITE],
+            ['', 0, 32, N_SOL_LA, BLACK],
+            ['', 0, 35, N_SI, WHITE]
+        ];
+
+        ]]></mx:Script>
+
+    <mx:Style>
+        .blackKey {
+            fillAlphas: 1, 1;
+            cornerRadius: 25;
+            fillColors: #000000, #333333;
+            focusColor: #666666;
+            textRollOverColor: #808080;
+            color: #FFFFFF;
+        }
+
+        .whiteKey {
+            fillAlphas: 1, 1;
+            cornerRadius: 25;
+            fillColors: #FFFFFF, #CCCCCC;
+            focusColor: #999999;
+            textRollOverColor: #808080;
+            color: #000000;
+        }
+
+        .keyboard {
+            paddingLeft: 10;
+            paddingBottom: 10;
+            paddingRight: 10;
+            paddingTop: 10;
+        }
+
+        .row {
+            horizontalGap: 5;
+            verticalGap: 5;
+            paddingLeft: 0;
+            paddingBottom: 0;
+            paddingRight: 0;
+            paddingTop: 0;
+        }
+    </mx:Style>
+
+    <mx:VBox styleName="keyboard" width="100%" mouseDown="mouseDownHandler(event)" mouseUp="mouseUpHandler(event)"
+            paddingLeft="25">
+        <mx:HBox styleName="row" width="100%">
+            <mx:Repeater id="rp1" dataProvider="{dp1}">
+                <mx:Button height="50" width="50" label="{rp1.currentItem[0]}" styleName="{rp1.currentItem[4]}"
+                           toolTip="{rp1.currentItem[3]}" initialize="pushButton(event)"/>
+            </mx:Repeater>
+        </mx:HBox>
+
+        <mx:HBox styleName="row" width="100%">
+            <mx:Spacer width="20"/>
+            <mx:Repeater id="rp2" dataProvider="{dp2}">
+                <mx:Button height="50" width="50" label="{rp2.currentItem[0]}" styleName="{rp2.currentItem[4]}"
+                           toolTip="{rp2.currentItem[3]}" initialize="pushButton(event)"/>
+            </mx:Repeater>
+        </mx:HBox>
+
+        <mx:HBox styleName="row" width="100%">
+            <mx:Spacer width="40"/>
+            <mx:Repeater id="rp3" dataProvider="{dp3}">
+                <mx:Button height="50" width="50" label="{rp3.currentItem[0]}" styleName="{rp3.currentItem[4]}"
+                           toolTip="{rp3.currentItem[3]}" initialize="pushButton(event)"/>
+            </mx:Repeater>
+        </mx:HBox>
+    </mx:VBox>
+
+</instruments:AbstractInstrument>

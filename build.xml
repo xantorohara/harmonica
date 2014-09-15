@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project name="harmonica" default="build">
+
+    <property name="project" value="harmonica"/>
+
+    <property file="local.properties"/>
+
+    <target name="clean">
+        <delete dir="out"/>
+    </target>
+
+    <target name="buildnumber">
+        <buildnumber/>
+        <echo message="Build number: ${build.number}"/>
+        <echo file="src/Version.as"
+              message="package {public final class Version {public static const BUILD_NUMBER:int = ${build.number};}}"/>
+    </target>
+
+    <target name="build" depends="buildnumber">
+        <exec executable="${flex.mxcompiler}" failonerror="true">
+            <arg value="-debug=true"/>
+            <arg value="-theme=${flex.home}/frameworks/themes/Halo/halo.swc"/>
+            <arg value="-output=out/${project}.swf"/>
+            <arg value="src/${project}.mxml"/>
+        </exec>
+
+        <filter token="version" value="${build.number}"/>
+
+        <copy todir="out" filtering="true" overwrite="true">
+            <fileset dir="web"/>
+        </copy>
+    </target>
+</project>

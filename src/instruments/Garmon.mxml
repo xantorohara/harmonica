@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<instruments:AbstractInstrument xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:instruments="instruments.*"
+                                verticalAlign="middle" horizontalAlign="center">
+
+    <mx:Script><![CDATA[
+
+        [Bindable]
+        private var dp1:Array = [
+            ['', 0, 15, N_RE_MI],
+            ['', 0, 8, N_SOL_LA],
+            ['z', 90, 0, N_DO],
+            ['x', 88, 2, N_MI],
+            ['c', 67, 4, N_SOL],
+            ['v', 86, 6, N_SI],
+            ['b', 66, 8, N_RE],
+            ['n', 78, 10, N_FA],
+            ['m', 77, 12, N_LA],
+            [',', 188, 14, N_DO],
+            ['.', 190, 16, N_MI],
+            ['/', 191, 18, N_SOL],
+            ['', 80, 20, N_SI]
+        ];
+
+        [Bindable]
+        private var dp2:Array = [
+            ['', 0, 18, N_FA_SOL],
+            ['a', 65, 1, N_RE],
+            ['s', 83, 3, N_FA],
+            ['d', 68, 5, N_LA],
+            ['f', 70, 7, N_DO],
+            ['g', 71, 9, N_MI],
+            ['h', 72, 11, N_SOL],
+            ['j', 74, 13, N_SI],
+            ['k', 75, 15, N_RE],
+            ['l', 76, 17, N_FA],
+            [';', 186, 19, N_LA],
+            ['\'', 222, 21, N_DO]
+        ];
+        ]]></mx:Script>
+
+    <mx:Style>
+        .key {
+            cornerRadius: 25;
+            fillColors: #FFFFFF, #CCCCCC;
+            fillAlphas: 1, 1;
+            focusColor: #999999;
+            textRollOverColor: #808080;
+            color: #000000;
+        }
+
+        .keyboard {
+            paddingLeft: 10;
+            paddingBottom: 10;
+            paddingRight: 10;
+            paddingTop: 10;
+        }
+
+        .row {
+            horizontalGap: 5;
+            verticalGap: 5;
+            paddingLeft: 0;
+            paddingBottom: 0;
+            paddingRight: 0;
+            paddingTop: 0;
+        }
+    </mx:Style>
+
+    <mx:VBox styleName="keyboard" width="100%" mouseDown="mouseDownHandler(event)" mouseUp="mouseUpHandler(event)"
+            paddingLeft="25">
+        <mx:HBox styleName="row" width="100%">
+            <mx:Spacer width="25"/>
+            <mx:Repeater id="rp2" dataProvider="{dp2}">
+                <mx:Button height="50" width="50" label="{rp2.currentItem[0]}" styleName="key"
+                           toolTip="{rp2.currentItem[3]}" initialize="pushButton(event)"/>
+            </mx:Repeater>
+        </mx:HBox>
+
+        <mx:HBox styleName="row" width="100%">
+            <mx:Repeater id="rp1" dataProvider="{dp1}">
+                <mx:Button height="50" width="50" label="{rp1.currentItem[0]}" styleName="key"
+                           toolTip="{rp1.currentItem[3]}" initialize="pushButton(event)"/>
+            </mx:Repeater>
+        </mx:HBox>
+    </mx:VBox>
+</instruments:AbstractInstrument>

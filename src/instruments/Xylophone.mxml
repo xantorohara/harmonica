@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<instruments:AbstractInstrument xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:instruments="instruments.*"
+                                verticalAlign="middle" horizontalAlign="center">
+
+    <mx:Script><![CDATA[
+
+        [Bindable]
+        private var dp:Array = [
+            ['z', 90, 0, N_DO, 200, [0xFFFFFF, 0xFF0000]],
+            ['x', 88, 2, N_RE, 190, [0xFFFFFF, 0xFF7F00]],
+            ['c', 67, 4, N_MI, 180, [0xFFFFFF, 0xFFFF00]],
+            ['v', 86, 5, N_FA, 170, [0xFFFFFF, 0x00FF00]],
+            ['b', 66, 7, N_SOL, 160, [0xFFFFFF, 0x0000FF]],
+            ['n', 78, 9, N_LA, 150, [0xFFFFFF, 0x6600FF]],
+            ['m', 77, 11, N_SI, 140, [0xFFFFFF, 0x8B00FF]],
+
+            ['a', 65, 12, N_DO, 120, [0xFFFFFF, 0xFF0000]],
+            ['s', 83, 14, N_RE, 110, [0xFFFFFF, 0xFF7F00]],
+            ['d', 68, 16, N_MI, 100, [0xFFFFFF, 0xFFFF00]],
+            ['f', 70, 17, N_FA, 90, [0xFFFFFF, 0x00FF00]],
+            ['g', 71, 19, N_SOL, 80, [0xFFFFFF, 0x0000FF]],
+            ['h', 72, 21, N_LA, 70, [0xFFFFFF, 0x6600FF]],
+            ['j', 74, 23, N_SI, 60, [0xFFFFFF, 0x8B00FF]],
+            ['k', 75, 24, N_DO, 50, [0xFFFFFF, 0xFFFFFF]]
+        ];
+        ]]></mx:Script>
+
+    <mx:Style>
+        .key {
+            cornerRadius: 5;
+            fillAlphas: 1, 1;
+            focusColor: #999999;
+            textRollOverColor: #808080;
+            color: #808080;
+        }
+
+        .row {
+            horizontalGap: 5;
+            verticalGap: 5;
+            paddingLeft: 0;
+            paddingBottom: 0;
+            paddingRight: 0;
+            paddingTop: 0;
+        }
+    </mx:Style>
+
+    <mx:HBox styleName="row" mouseDown="mouseDownHandler(event)" mouseUp="mouseUpHandler(event)">
+        <mx:Repeater id="rp" dataProvider="{dp}">
+            <mx:Button height="{rp.currentItem[4]}" width="40" label="{rp.currentItem[0]}" styleName="key"
+                       toolTip="{rp.currentItem[3]}" initialize="pushButton(event)"
+                       fillColors="{rp.currentItem[5]}"/>
+        </mx:Repeater>
+    </mx:HBox>
+</instruments:AbstractInstrument>
